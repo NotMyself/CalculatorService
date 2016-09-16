@@ -3,6 +3,7 @@ using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.ServiceModel.Web;
 using System.ServiceProcess;
+using NLog;
 
 namespace CalculatorService
 {
@@ -16,7 +17,10 @@ namespace CalculatorService
         {
             _serviceUri = serviceUri;
             ServiceName = serviceName;
+            Logger = LogManager.GetCurrentClassLogger();
         }
+
+        public ILogger Logger { get; set; }
 
         protected override void OnStart(string[] args)
         {
@@ -30,7 +34,7 @@ namespace CalculatorService
 
         public void Start()
         {
-            Console.WriteLine(ServiceName + " starting...");
+            Logger?.Info($"{ServiceName} starting.");
             var openSucceeded = false;
             try
             {
@@ -40,7 +44,7 @@ namespace CalculatorService
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Caught exception while creating {ServiceName}:{e}");
+                Logger?.Error(e, $"Caught exception while creating {ServiceName}:{e}");
                 return;
             }
 
@@ -60,7 +64,7 @@ namespace CalculatorService
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Caught exception while starting {ServiceName} : {ex}");
+                Logger?.Error(ex, $"Caught exception while starting {ServiceName} : {ex}");
             }
             finally
             {
@@ -72,11 +76,11 @@ namespace CalculatorService
 
             if (_serviceHost.State == CommunicationState.Opened)
             {
-                Console.WriteLine(ServiceName + $"{ServiceName} started at {_serviceUri}");
+                Logger?.Info($"{ServiceName} started at {_serviceUri}.");
             }
             else
             {
-                Console.WriteLine($"{ServiceName} failed to open");
+                Logger?.Fatal($"{ServiceName} failed to open.");
                 var closeSucceeded = false;
                 try
                 {
@@ -85,7 +89,7 @@ namespace CalculatorService
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"{ServiceName} failed to close: {ex}");
+                    Logger?.Error(ex, $"{ServiceName} failed to close: {ex}");
                 }
                 finally
                 {
@@ -99,7 +103,7 @@ namespace CalculatorService
 
         public new void Stop()
         {
-            Console.WriteLine($"{ServiceName} stopping...");
+            Logger?.Info($"{ServiceName} stopping.");
             try
             {
                 if (_serviceHost == null) return;
@@ -108,11 +112,11 @@ namespace CalculatorService
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Caught exception while stopping {ServiceName} : {ex}");
+                Logger?.Error(ex, $"Caught exception while stopping {ServiceName} : {ex}");
             }
             finally
             {
-                Console.WriteLine($"{ServiceName} stopped...");
+                Logger?.Info($"{ServiceName} stopped.");
             }
         }
     }

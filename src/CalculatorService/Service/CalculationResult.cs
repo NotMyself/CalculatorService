@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace CalculatorService
+namespace CalculatorService.Service
 {
     [DataContract]
     public class CalculationResult
