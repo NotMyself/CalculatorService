@@ -3,7 +3,7 @@ using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.ServiceModel.Web;
 using System.ServiceProcess;
-using NLog;
+using log4net;
 
 namespace CalculatorService
 {
@@ -17,10 +17,10 @@ namespace CalculatorService
         {
             _serviceUri = serviceUri;
             ServiceName = serviceName;
-            Logger = LogManager.GetCurrentClassLogger();
+            Logger = LogManager.GetLogger(typeof(WcfServiceWrapper<TServiceImplementation, TServiceContract>));
         }
 
-        public ILogger Logger { get; set; }
+        public ILog Logger { get; set; }
 
         protected override void OnStart(string[] args)
         {
@@ -44,7 +44,7 @@ namespace CalculatorService
             }
             catch (Exception e)
             {
-                Logger?.Error(e, $"Caught exception while creating {ServiceName}:{e}");
+                Logger?.Error($"Caught exception while creating {ServiceName}:{e}", e);
                 return;
             }
 
@@ -64,7 +64,7 @@ namespace CalculatorService
             }
             catch (Exception ex)
             {
-                Logger?.Error(ex, $"Caught exception while starting {ServiceName} : {ex}");
+                Logger?.Error($"Caught exception while starting {ServiceName} : {ex}", ex);
             }
             finally
             {
@@ -89,7 +89,7 @@ namespace CalculatorService
                 }
                 catch (Exception ex)
                 {
-                    Logger?.Error(ex, $"{ServiceName} failed to close: {ex}");
+                    Logger?.Error($"{ServiceName} failed to close: {ex}", ex);
                 }
                 finally
                 {
@@ -112,7 +112,7 @@ namespace CalculatorService
             }
             catch (Exception ex)
             {
-                Logger?.Error(ex, $"Caught exception while stopping {ServiceName} : {ex}");
+                Logger?.Error($"Caught exception while stopping {ServiceName} : {ex}", ex);
             }
             finally
             {

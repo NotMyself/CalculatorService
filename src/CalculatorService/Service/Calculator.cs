@@ -1,7 +1,7 @@
 using System;
 using System.ServiceModel;
 using CalculatorService.Extensions;
-using NLog;
+using log4net;
 
 namespace CalculatorService.Service
 {
@@ -13,10 +13,10 @@ namespace CalculatorService.Service
     {
         public Calculator()
         {
-            Logger = LogManager.GetCurrentClassLogger();
+            Logger = LogManager.GetLogger(typeof(Calculator));
         }
 
-        public ILogger Logger { get; set; }
+        public ILog Logger { get; set; }
 
         public CalculationResult Add(string n1, string n2)
         {

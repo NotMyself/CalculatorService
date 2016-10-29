@@ -1,12 +1,14 @@
 ﻿using CalculatorService.Service;
-using NLog;
+using log4net;
 using Topshelf;
+
+[assembly:log4net.Config.XmlConfigurator]
 
 namespace CalculatorService
 {
     class Program
     {
-        private static ILogger logger = LogManager.GetCurrentClassLogger();
+        private static ILog logger = LogManager.GetLogger(typeof(Program));
 
         static void Main(string[] args)
         {
