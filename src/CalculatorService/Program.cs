@@ -1,20 +1,26 @@
-﻿using CalculatorService.Service;
+﻿using System;
+using CalculatorService.Service;
 using log4net;
 using Topshelf;
 
+//this call is global causes log4net to configure using app.config
 [assembly:log4net.Config.XmlConfigurator]
 
 namespace CalculatorService
 {
-    class Program
+    public class Program
     {
-        private static ILog logger = LogManager.GetLogger(typeof(Program));
+        const string DefaultServiceUri = "http://localhost:8080/calc";
+
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(Program));
 
         static void Main(string[] args)
         {
-            const string serviceUri = "http://localhost:8080/calc";
 
-            logger.Info($"Service Url: {serviceUri}");
+            var serviceUri = Uri.IsWellFormedUriString(args[0], UriKind.RelativeOrAbsolute) 
+                ? args[0] : DefaultServiceUri;
+
+            Logger.Info($"Service Url: {serviceUri}");
 
             var host = HostFactory.New(c =>
             {

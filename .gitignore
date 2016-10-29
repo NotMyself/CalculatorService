@@ -3,6 +3,7 @@
 
 # Project specific
 tools/**/elasticsearch*/
+tools/**/Logs/
 
 # User-specific files
 *.suo

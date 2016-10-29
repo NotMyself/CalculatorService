@@ -7,6 +7,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorService", "src\Ca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorService.Tests", "tests\CalculatorService.Tests\CalculatorService.Tests.csproj", "{3A09C0B2-3656-4A99-B972-4D49CFDFDA50}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Items", "Items", "{13FE15BD-A2E7-4F5B-9463-97518976202A}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		Readme.md = Readme.md
+		SolutionInfo.cs = SolutionInfo.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{DB2F9C26-5C57-4A17-91AA-C4E017954F2C}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\register_uri.ps1 = scripts\register_uri.ps1
+		scripts\start_exceptionless.ps1 = scripts\start_exceptionless.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
