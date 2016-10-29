@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CalculatorService.Service;
 using log4net;
 using Topshelf;
@@ -17,7 +18,7 @@ namespace CalculatorService
         static void Main(string[] args)
         {
 
-            var serviceUri = Uri.IsWellFormedUriString(args[0], UriKind.RelativeOrAbsolute) 
+            var serviceUri = args.Any() && Uri.IsWellFormedUriString(args[0], UriKind.RelativeOrAbsolute) 
                 ? args[0] : DefaultServiceUri;
 
             Logger.Info($"Service Url: {serviceUri}");
