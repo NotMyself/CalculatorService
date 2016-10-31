@@ -5,6 +5,7 @@
 tools/**/elasticsearch*/
 tools/**/Logs/
 tools/**/archive/
+storage/
 
 # User-specific files
 *.suo
